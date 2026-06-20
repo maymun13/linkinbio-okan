@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OkanPasOKLM — Liens</title>
+  <meta name="description" content="Retrouvez OkanPasOKLM sur Instagram, TikTok, YouTube. Partenariat & contact pro." />
+  <meta property="og:title" content="OkanPasOKLM 🏍️" />
+  <meta property="og:description" content="Tous mes réseaux au même endroit." />
+  <meta property="og:image" content="photo.jpg" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#070707" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏍️</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --fire: #ff5e1a;
+      --fire-2: #ff2d2d;
+      --glow: rgba(255, 94, 26, 0.55);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      background: #070707;
+      color: #fff;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 56px 20px;
+      overflow-x: hidden;
+    }
+
+    /* animated glow background */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    body::before {
+      width: 70vmax; height: 70vmax;
+      top: -25vmax; left: 50%;
+      transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(255,94,26,0.28), transparent 60%);
+      animation: pulse 7s ease-in-out infinite;
+    }
+    body::after {
+      width: 50vmax; height: 50vmax;
+      bottom: -20vmax; right: -10vmax;
+      background: radial-gradient(circle, rgba(255,45,45,0.16), transparent 60%);
+      animation: pulse 9s ease-in-out infinite reverse;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+      50%      { opacity: 1;   transform: translateX(-50%) scale(1.12); }
+    }
+
+    /* blurred photo backdrop */
+    .bg-photo {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: url('photo.jpg') center 32% / cover no-repeat;
+      filter: blur(34px) brightness(0.42) saturate(1.15);
+      transform: scale(1.18);
+    }
+    .bg-photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(7,7,7,0.55), rgba(7,7,7,0.82));
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* round avatar with glowing ring */
+    .avatar-wrap {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      margin-bottom: 22px;
+    }
+    .avatar-ring {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--fire), var(--fire-2), #ffb070, var(--fire));
+      filter: blur(2px);
+      animation: spin 6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .avatar {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: #1a1a1a;
+      border: 3px solid #070707;
+      overflow: hidden;
+      box-shadow: 0 0 45px var(--glow);
+    }
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 58%;
+    }
+
+    .followers {
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 13px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--fire), var(--fire-2));
+      color: #fff;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(255,94,26,0.5);
+      border: 2px solid #070707;
+    }
+    .followers .lbl {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    .name {
+      font-size: 27px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      text-align: center;
+      background: linear-gradient(90deg, #fff, #ffd9c2 35%, var(--fire) 50%, #ffd9c2 65%, #fff);
+      background-size: 220% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: nameShine 5s linear infinite;
+    }
+    @keyframes nameShine {
+      to { background-position: 220% center; }
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fire);
+      border: 1px solid rgba(255,94,26,0.45);
+      background: rgba(255,94,26,0.1);
+      padding: 6px 13px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+
+    .bio {
+      font-size: 14.5px;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      margin-bottom: 22px;
+      max-width: 360px;
+      line-height: 1.55;
+    }
+
+    /* stats counters */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 100%;
+      margin-bottom: 26px;
+    }
+    .stat {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 15px 6px;
+      text-align: center;
+    }
+    .stat .num {
+      font-size: 23px;
+      font-weight: 900;
+      line-height: 1.1;
+      background: linear-gradient(90deg, #fff, #ffd9c2 55%, var(--fire));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .stat .lbl {
+      margin-top: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+    .stats-caption {
+      width: 100%;
+      margin: -12px 0 24px;
+      text-align: center;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--fire);
+      letter-spacing: 0.01em;
+    }
+    @media (max-width: 380px) {
+      .stat .num { font-size: 20px; }
+    }
+
+    /* highlighted contact */
+    .contact-top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      width: 100%;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      background: linear-gradient(135deg, rgba(255,94,26,0.16), rgba(255,45,45,0.08));
+      border: 1px solid rgba(255,94,26,0.4);
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(255,94,26,0.12);
+    }
+    .contact-top .label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+    .contact-top a {
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      text-decoration: none;
+      word-break: break-all;
+    }
+    .contact-top a:hover { color: #ffd9c2; }
+
+    .links {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    /* section separators */
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      margin: 10px 2px 0;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.22), transparent);
+    }
+
+    /* cascade entrance */
+    @keyframes linkIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .links > * {
+      animation: linkIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+    .links > *:nth-child(1)  { animation-delay: 0.10s; }
+    .links > *:nth-child(2)  { animation-delay: 0.16s; }
+    .links > *:nth-child(3)  { animation-delay: 0.22s; }
+    .links > *:nth-child(4)  { animation-delay: 0.28s; }
+    .links > *:nth-child(5)  { animation-delay: 0.34s; }
+    .links > *:nth-child(6)  { animation-delay: 0.40s; }
+    .links > *:nth-child(7)  { animation-delay: 0.46s; }
+    .links > *:nth-child(8)  { animation-delay: 0.52s; }
+    .links > *:nth-child(9)  { animation-delay: 0.58s; }
+    .links > *:nth-child(10) { animation-delay: 0.64s; }
+    .links > *:nth-child(11) { animation-delay: 0.70s; }
+
+    .link {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+      padding: 17px 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 15px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 15.5px;
+      font-weight: 700;
+      overflow: hidden;
+      transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+    .link::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--accent, #fff);
+    }
+    .link:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--accent, rgba(255,255,255,0.3));
+      box-shadow: 0 8px 30px -8px var(--accent, rgba(255,255,255,0.4));
+    }
+    .link:active { background: rgba(255,255,255,0.14); }
+
+    /* shine sweep on hover */
+    .link::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -130%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.18), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.6s ease;
+      pointer-events: none;
+    }
+    .link:hover::after { left: 150%; }
+
+    /* icon + arrow react on hover */
+    .link .link-icon,
+    .link .link-arrow { transition: transform 0.2s ease, opacity 0.2s ease; }
+    .link:hover .link-icon { transform: scale(1.14); }
+    .link:hover .link-arrow { transform: translateX(4px); opacity: 0.85; }
+
+    /* stats cards lift on hover */
+    .stat { transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease; }
+    .stat:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,94,26,0.5);
+      box-shadow: 0 10px 30px -10px rgba(255,94,26,0.45);
+    }
+
+    /* Snapchat icon attention glow */
+    .snap .link-icon { animation: snapGlow 2.2s ease-in-out infinite; }
+    @keyframes snapGlow {
+      0%, 100% { filter: drop-shadow(0 0 0 rgba(255,252,0,0)); }
+      50%      { filter: drop-shadow(0 0 9px rgba(255,252,0,0.85)); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+
+    .link-icon {
+      width: 26px; height: 26px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent, #fff);
+    }
+    .link-icon svg { width: 24px; height: 24px; }
+    .link-label { flex: 1; }
+    .link-sub {
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.45);
+      margin-top: 2px;
+    }
+    .link-arrow { opacity: 0.45; font-size: 20px; }
+
+    .count-badge {
+      flex-shrink: 0;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent, #fff);
+      color: #111;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      box-shadow: 0 0 14px -2px var(--accent, transparent);
+    }
+
+    .snap { --accent: #fffc00; }
+    .ig { --accent: #e1306c; }
+    .tk { --accent: #25f4ee; }
+    .yt { --accent: #ff0000; }
+    .x  { --accent: #1d9bf0; }
+    .mail { --accent: #ff5e1a; }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+    }
+
+    @media (max-width: 380px) {
+      .name { font-size: 23px; }
+      .link { padding: 15px 18px; font-size: 14.5px; }
+      .avatar-wrap { width: 132px; height: 132px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-photo"></div>
+  <main class="container">
+
+    <div class="avatar-wrap">
+      <div class="avatar-ring"></div>
+      <div class="avatar">
+        <img src="photo.jpg" alt="OkanPasOKLM" />
+      </div>
+    </div>
+
+    <h1 class="name">Okan Pas OKLM</h1>
+    <span class="badge">🏍️ Biker &amp; créateur de contenu</span>
+    <p class="bio">Juste là pour rigoler et partager mes petits moments 🏍️</p>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="num" data-target="20" data-suffix="M+">0</div>
+        <div class="lbl">👁️ Vues</div>
+      </div>
+      <div class="stat">
+        <div class="num" data-target="110" data-suffix="K+">0</div>
+        <div class="lbl">👥 Communauté</div>
+      </div>
+      <div class="stat">
+        <div class="num" data-target="3" data-suffix="M+">0</div>
+        <div class="lbl">❤️ Likes</div>
+      </div>
+    </div>
+
+    <p class="stats-caption">🔥 Plus de 20M de vues cumulées, tous réseaux confondus</p>
+
+    <div class="contact-top">
+      <span class="label">📩 Partenariat &amp; contact pro</span>
+      <a href="mailto:Contact@OkanPasOKLM.com">Contact@OkanPasOKLM.com</a>
+    </div>
+
+    <nav class="links">
+
+      <a class="link snap" href="https://www.snapchat.com/add/OkanPasOKLMMM" target="_blank" rel="noopener">
+        <span class="link-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2c2.7 0 4.5 2 4.6 4.7 0 .5 0 1.2-.1 1.9.2.1.5.2.8.2.5 0 .8-.3 1.1-.3.4 0 .8.3.8.7 0 .6-.8.8-1.4 1-.4.1-.8.2-.9.5-.1.3.1.6.4 1 .6.9 1.6 1.5 2.6 1.8.3.1.5.3.5.6 0 .6-1.4.9-2 1-.1.2-.1.5-.2.7-.1.2-.2.3-.5.3-.4 0-.9-.2-1.6-.2-.9 0-1.3.2-1.9.7-.6.5-1.3 1-2.6 1s-2-.5-2.6-1c-.6-.5-1-.7-1.9-.7-.7 0-1.2.2-1.6.2-.3 0-.4-.1-.5-.3-.1-.2-.1-.5-.2-.7-.6-.1-2-.4-2-1 0-.3.2-.5.5-.6 1-.3 2-.9 2.6-1.8.3-.4.5-.7.4-1-.1-.3-.5-.4-.9-.5-.6-.2-1.4-.4-1.4-1 0-.4.4-.7.8-.7.3 0 .6.3 1.1.3.3 0 .6-.1.8-.2-.1-.7-.1-1.4-.1-1.9C7.5 4 9.3 2 12 2Z"/>
+          </svg>
+        </span>
+        <span class="link-label">Snapchat — Ajoute-moi 👻<div class="link-sub">@OkanPasOKLMMM</div></span>
+        <span class="count-badge">+77K</span>
+        <span class="link-arrow">›</span>
+      </a>
+
+      <div class="section-title">🏍️ Mes réseaux moto</div>
+
+      <a class="link ig" href="https://www.instagram.com/OkanPasOKLM_biker/" target="_blank" rel="noopener">
+        <span class="link-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/>
+            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+            <circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="link-label">Instagram BIKER 🏍️<div class="link-sub">@OkanPasOKLM_biker</div></span>
+        <span class="count-badge">+10K</span>
+        <span class="link-arrow">›</span>
+      </a>
+
+      <a class="link tk" href="https://www.tiktok.com/@OkanPasOKLM_biker" target="_blank" rel="noopener">
+        <span class="link-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19.5 8.6a6.6 6.6 0 0 1-4-1.3v7.1a5.6 5.6 0 1 1-5.6-5.6c.3 0 .6 0 .9.1v2.8a2.8 2.8 0 1 0 2 2.7V2h2.7a4 4 0 0 0 4 4v2.6Z"/>
+          </svg>
+        </span>
+        <span class="link-label">TikTok BIKER 🏍️<div class="link-sub">@OkanPasOKLM_biker</div></span>
+        <span class="count-badge">+14K</span>
+        <span class="link-arrow">›</span>
+      </a>
+
+      <div class="section-title">😎 Ma vie perso</div>
+
+      <a class="link ig" href="https://www.instagram.com/okanpasoklm/" target="_blank" rel="noopener">
+        <span class="link-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/>
+            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+            <circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="link-label">Instagram IRL 😎<div class="link-sub">@okanpasoklm</div></span>
+        <span class="link-arrow">›</span>
+      </a>
+
+      <a class="link tk" href="https://www.tiktok.com/@okanpasoklm" target="_blank" rel="noopener">
+        <span class="link-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19.5 8.6a6.6 6.6 0 0 1-4-1.3v7.1a5.6 5.6 0 1 1-5.6-5.6c.3 0 .6 0 .9.1v2.8a2.8 2.8 0 1 0 2 2.7V2h2.7a4 4 0 0 0 4 4v2.6Z"/>
+          </svg>
+        </span>
+        <span class="link-label">TikTok IRL 😎<div class="link-sub">@okanpasoklm</div></span>
+        <span class="link-arrow">›</span>
+      </a>
+
+      <a class="link yt" href="https://www.youtube.com/@okanpasoklm" target="_blank" rel="noopener">
+        <span class="link-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.5 12 4.5 12 4.5s-7 0-8.9.6A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.6 8.9.6 8.9.6s7 0 8.9-.6a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8ZM9.8 15.5v-7l5.8 3.5-5.8 3.5Z"/>
+          </svg>
+        </span>
+        <span class="link-label">YouTube<div class="link-sub">@okanpasoklm</div></span>
+        <span class="link-arrow">›</span>
+      </a>
+
+      <a class="link x" href="https://x.com/okanpasoklm" target="_blank" rel="noopener">
+        <span class="link-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.5 3h3.2l-7 8 8.2 10.9h-6.4l-5-6.6-5.8 6.6H1.5l7.5-8.6L1.1 3h6.6l4.5 6 5.3-6Zm-1.1 16.9h1.8L7.7 4.8H5.8l10.6 15.1Z"/>
+          </svg>
+        </span>
+        <span class="link-label">Twitter / X<div class="link-sub">@okanpasoklm</div></span>
+        <span class="count-badge">+56K</span>
+        <span class="link-arrow">›</span>
+      </a>
+
+      <div class="section-title">📩 Pro &amp; partenariat</div>
+
+      <a class="link mail" href="mailto:Contact@OkanPasOKLM.com">
+        <span class="link-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M2 7l10 7 10-7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="link-label">Partenariat &amp; contact<div class="link-sub">Contact@OkanPasOKLM.com</div></span>
+        <span class="link-arrow">›</span>
+      </a>
+
+    </nav>
+
+    <p class="footer">© <span id="year"></span> OkanPasOKLM 🏍️</p>
+  </main>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // animated count-up for stats
+    function animateCount(el) {
+      var target = parseFloat(el.dataset.target);
+      var suffix = el.dataset.suffix || '';
+      var decimals = (target % 1 !== 0) ? 1 : 0;
+      var duration = 1500, startTime = null;
+      function step(now) {
+        if (!startTime) startTime = now;
+        var p = Math.min((now - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = (target * eased).toFixed(decimals) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = target.toFixed(decimals) + suffix;
+      }
+      requestAnimationFrame(step);
+    }
+    document.querySelectorAll('.stat .num').forEach(function (el) {
+      setTimeout(function () { animateCount(el); }, 400);
+    });
+  </script>
+</body>
+</html>
