@@ -680,6 +680,21 @@
     document.querySelectorAll('.stat .num').forEach(function (el) {
       setTimeout(function () { animateCount(el); }, 400);
     });
+
+    // track clicks per network (Vercel Analytics custom events)
+    document.querySelectorAll('nav.links a.link').forEach(function (a) {
+      a.addEventListener('click', function () {
+        var label = a.querySelector('.link-label');
+        var name = label ? label.childNodes[0].textContent.trim() : a.href;
+        if (window.va) window.va('event', { name: 'clic_reseau', data: { reseau: name } });
+      });
+    });
   </script>
+
+  <!-- Vercel Web Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
