@@ -3,5 +3,9 @@
   "trailingSlash": false,
   "redirects": [
     { "source": "/", "destination": "/liens", "permanent": false }
+  ],
+  "rewrites": [
+    { "source": "/x", "destination": "/api/go?slug=x" },
+    { "source": "/stats", "destination": "/api/stats" }
   ]
 }
