@@ -1,7 +1,9 @@
-// Redirection tracée : /x -> compte X, avec log du clic dans Supabase.
-// Ajouter une nouvelle plateforme = une ligne ici + un rewrite dans vercel.json.
+// Liens d'entrée tracés : le lien qu'on met dans la bio d'un réseau (ex. /x pour X)
+// renvoie vers la page de liens et enregistre d'où vient le visiteur.
+// Ajouter un réseau = une ligne ici + un rewrite dans vercel.json.
+const PAGE_LIENS = 'https://okanpasoklm.com/liens';
 const DESTINATIONS = {
-  x: 'https://x.com/okanpasoklm',
+  x: PAGE_LIENS,
 };
 
 const BOT_UA = /bot|crawler|spider|preview|facebookexternalhit|whatsapp|telegrambot|discordbot|slackbot|twitterbot|embedly|quora link preview|vercel|headless/i;
