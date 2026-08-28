@@ -509,6 +509,48 @@
       height: 1px;
       background: linear-gradient(90deg, rgba(255,255,255,0.22), transparent);
     }
+    .tv-rail { position: relative; width: 100%; }
+
+    /* flèches de défilement — visibles seulement si le carrousel déborde */
+    .tv-nav {
+      position: absolute;
+      top: 50%;
+      z-index: 5;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      margin: 0;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.28);
+      background: rgba(10,10,10,0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.55);
+      transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+    .tv-nav svg { width: 17px; height: 17px; }
+    .tv-nav:hover {
+      background: rgba(255,94,26,0.9);
+      border-color: rgba(255,94,26,0.9);
+      transform: translateY(-50%) scale(1.1);
+    }
+    .tv-nav:active { transform: translateY(-50%) scale(0.94); }
+    .tv-nav[hidden] { display: none; }
+    .tv-nav.is-end { opacity: 0.22; pointer-events: none; }
+    .tv-prev { left: 2px; }
+    .tv-next { right: 2px; }
+
+    @media (max-width: 380px) {
+      .tv-nav { width: 30px; height: 30px; }
+      .tv-nav svg { width: 15px; height: 15px; }
+    }
+
     .tv-viewport {
       position: relative;
       width: 100%;
@@ -521,6 +563,7 @@
       overflow-x: auto;
       overflow-y: hidden;
       scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       padding: 3px 2px 4px;
@@ -753,6 +796,7 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .tv-hint span { animation: none; }
+      .tv-scroll { scroll-behavior: auto; }
     }
 
     .footer {
@@ -816,8 +860,16 @@
 
     <section class="top-videos">
       <h2 class="tv-head">🔥 Ça a cartonné</h2>
-      <div class="tv-viewport">
-        <div class="tv-scroll" id="tvScroll"></div>
+      <div class="tv-rail">
+        <button type="button" class="tv-nav tv-prev" id="tvPrev" aria-label="Vidéos précédentes" hidden>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="tv-viewport">
+          <div class="tv-scroll" id="tvScroll"></div>
+        </div>
+        <button type="button" class="tv-nav tv-next" id="tvNext" aria-label="Vidéos suivantes" hidden>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
       <p class="tv-hint">Fais glisser <span>→</span></p>
     </section>
@@ -1042,16 +1094,66 @@
         wrap.appendChild(card);
       });
 
-      // "fais glisser" : affiché seulement si ça déborde vraiment, puis masqué au 1er scroll
+      // ----- navigation : flèches + indice "fais glisser" -----
       var hint = document.querySelector('.tv-hint');
-      function refreshHint() {
-        if (!hint) return;
-        hint.classList.toggle('is-on', wrap.scrollWidth > wrap.clientWidth + 4);
+      var prev = document.getElementById('tvPrev');
+      var next = document.getElementById('tvNext');
+
+      function overflows() { return wrap.scrollWidth > wrap.clientWidth + 4; }
+
+      // largeur d'un pas = une vignette + l'espace entre deux
+      function step() {
+        var card = wrap.querySelector('.tv-card');
+        if (!card) return wrap.clientWidth * 0.8;
+        var gap = parseFloat(getComputedStyle(wrap).columnGap || getComputedStyle(wrap).gap) || 11;
+        return card.getBoundingClientRect().width + gap;
       }
-      refreshHint();
-      window.addEventListener('resize', refreshHint);
-      if (window.ResizeObserver) new ResizeObserver(refreshHint).observe(wrap);
+
+      // grise la flèche au bout de la course
+      function setEnds(pos, max) {
+        if (!prev || !next) return;
+        prev.classList.toggle('is-end', pos <= 2);
+        next.classList.toggle('is-end', pos >= max - 2);
+      }
+
+      function refresh() {
+        var many = overflows();
+        if (hint) hint.classList.toggle('is-on', many);
+        if (!prev || !next) return;
+        prev.hidden = next.hidden = !many;
+        if (!many) return;
+        setEnds(wrap.scrollLeft, wrap.scrollWidth - wrap.clientWidth);
+      }
+
+      // scrollLeft simple : la CSS (scroll-behavior: smooth) anime là où c'est
+      // supporté, et ça saute directement ailleurs — plutôt que scrollBy({behavior}),
+      // que Safari iOS ignorait purement et simplement avant la 15.4
+      function slide(dir) {
+        var max = wrap.scrollWidth - wrap.clientWidth;
+        var target = Math.max(0, Math.min(max, wrap.scrollLeft + step() * dir));
+        wrap.scrollLeft = target;
+        // l'état des flèches ne doit pas attendre l'événement de défilement
+        setEnds(target, max);
+      }
+
+      if (prev) prev.addEventListener('click', function () { slide(-1); });
+      if (next) next.addEventListener('click', function () { slide(1); });
+
+      // molette verticale / trackpad -> défilement horizontal du carrousel
+      wrap.addEventListener('wheel', function (e) {
+        if (!overflows()) return;
+        if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;   // déjà un geste horizontal
+        var max = wrap.scrollWidth - wrap.clientWidth;
+        if ((e.deltaY < 0 && wrap.scrollLeft <= 0) || (e.deltaY > 0 && wrap.scrollLeft >= max)) return;
+        e.preventDefault();
+        wrap.scrollLeft += e.deltaY;
+      }, { passive: false });
+
+      refresh();
+      window.addEventListener('resize', refresh);
+      if (window.ResizeObserver) new ResizeObserver(refresh).observe(wrap);
       wrap.addEventListener('scroll', function () {
+        refresh();
         if (hint && wrap.scrollLeft > 20) { hint.style.opacity = '0'; hint.style.transition = 'opacity .3s'; }
       }, { passive: true });
     })();
