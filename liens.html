@@ -490,6 +490,187 @@
     .x  { --accent: #1d9bf0; }
     .mail { --accent: #ff5e1a; }
 
+    /* ===== TOP VIDEOS (ça a cartonné) ===== */
+    .top-videos { width: 100%; margin-bottom: 26px; }
+    .tv-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 2px 12px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+    .tv-head::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.22), transparent);
+    }
+    .tv-viewport {
+      position: relative;
+      width: 100%;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 26px), transparent);
+              mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 26px), transparent);
+    }
+    .tv-scroll {
+      display: flex;
+      gap: 11px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 3px 2px 4px;
+    }
+    .tv-scroll::-webkit-scrollbar { display: none; }
+
+    .tv-card {
+      position: relative;
+      flex: 0 0 134px;
+      aspect-ratio: 9 / 16;
+      border-radius: 15px;
+      overflow: hidden;
+      scroll-snap-align: center;
+      text-decoration: none;
+      color: #fff;
+      background: linear-gradient(160deg, #1c1c1c, #0d0d0d);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 10px 26px -14px rgba(0,0,0,0.9);
+      transition: transform 0.22s cubic-bezier(0.2,0.8,0.2,1), border-color 0.22s ease, box-shadow 0.22s ease;
+      animation: linkIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+    .tv-card:hover {
+      transform: translateY(-5px) scale(1.03);
+      border-color: var(--accent, rgba(255,94,26,0.6));
+      box-shadow: 0 16px 34px -14px var(--accent, rgba(255,94,26,0.7));
+    }
+    .tv-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .tv-card:hover img { transform: scale(1.07); }
+    .tv-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 38%, transparent 48%, rgba(0,0,0,0.85) 100%);
+      pointer-events: none;
+    }
+
+    /* fallback quand pas de miniature */
+    .tv-card.no-cover { background: radial-gradient(120% 90% at 50% 0%, rgba(255,94,26,0.22), #121212 62%); }
+    .tv-ghost {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent, rgba(255,255,255,0.35));
+      opacity: 0.32;
+    }
+    .tv-ghost svg { width: 44px; height: 44px; }
+
+    .tv-plat {
+      position: absolute;
+      top: 8px; left: 8px;
+      z-index: 2;
+      width: 26px; height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: var(--accent, #fff);
+    }
+    .tv-plat svg { width: 14px; height: 14px; }
+
+    .tv-play {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.16);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1.5px solid rgba(255,255,255,0.55);
+      transition: transform 0.22s ease, background 0.22s ease;
+    }
+    .tv-play::before {
+      content: "";
+      margin-left: 3px;
+      border-style: solid;
+      border-width: 7px 0 7px 12px;
+      border-color: transparent transparent transparent #fff;
+    }
+    .tv-card:hover .tv-play { transform: translate(-50%, -50%) scale(1.14); background: rgba(255,255,255,0.28); }
+
+    .tv-meta {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      z-index: 2;
+      padding: 9px 10px 10px;
+    }
+    .tv-views {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+    .tv-views svg { width: 13px; height: 13px; opacity: 0.9; }
+    .tv-title {
+      margin-top: 2px;
+      font-size: 10.5px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.82);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .tv-hint {
+      margin: 6px 2px 0;
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.38);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .tv-hint span { animation: tvNudge 1.8s ease-in-out infinite; }
+    @keyframes tvNudge {
+      0%, 100% { transform: translateX(0); }
+      50%      { transform: translateX(4px); }
+    }
+
+    @media (max-width: 480px) {
+      .tv-card { flex-basis: 122px; }
+      .tv-play { width: 34px; height: 34px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tv-hint span { animation: none; }
+    }
+
     .footer {
       margin-top: 40px;
       font-size: 12px;
@@ -548,6 +729,14 @@
     </div>
 
     <p class="stats-caption">🔥 Plus de 20M de vues cumulées, tous réseaux confondus</p>
+
+    <section class="top-videos">
+      <h2 class="tv-head">🔥 Ça a cartonné</h2>
+      <div class="tv-viewport">
+        <div class="tv-scroll" id="tvScroll"></div>
+      </div>
+      <p class="tv-hint">Fais glisser <span>→</span></p>
+    </section>
 
     <div class="contact-top">
       <span class="label">📩 Partenariat &amp; contact pro</span>
@@ -680,6 +869,63 @@
     document.querySelectorAll('.stat .num').forEach(function (el) {
       setTimeout(function () { animateCount(el); }, 400);
     });
+
+    /* ===== TOP VIDEOS =====
+       Pour ajouter/modifier une vidéo : une ligne ici.
+       plat  : 'tiktok' | 'insta' | 'yt'
+       url   : lien de la vidéo
+       views : texte affiché (ex. '2,4M')
+       title : petite légende (optionnel)
+       cover : 'covers/xxx.jpg' (optionnel — sinon vignette dégradée)
+    */
+    var TOP_VIDEOS = [];
+
+    (function renderTopVideos() {
+      var wrap = document.getElementById('tvScroll');
+      var section = document.querySelector('.top-videos');
+      if (!wrap) return;
+      if (!TOP_VIDEOS.length) { if (section) section.style.display = 'none'; return; }
+
+      var ICONS = {
+        tiktok: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 8.6a6.6 6.6 0 0 1-4-1.3v7.1a5.6 5.6 0 1 1-5.6-5.6c.3 0 .6 0 .9.1v2.8a2.8 2.8 0 1 0 2 2.7V2h2.7a4 4 0 0 0 4 4v2.6Z"/></svg>',
+        insta: '<svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg>',
+        yt: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.5 12 4.5 12 4.5s-7 0-8.9.6A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.6 8.9.6 8.9.6s7 0 8.9-.6a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8ZM9.8 15.5v-7l5.8 3.5-5.8 3.5Z"/></svg>'
+      };
+      var CLASS = { tiktok: 'tk', insta: 'ig', yt: 'yt' };
+      var EYE = '<svg viewBox="0 0 24 24" fill="none"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>';
+
+      TOP_VIDEOS.forEach(function (v, i) {
+        var a = document.createElement('a');
+        a.className = 'tv-card ' + (CLASS[v.plat] || '') + (v.cover ? '' : ' no-cover');
+        a.href = v.url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.style.animationDelay = (0.10 + i * 0.05).toFixed(2) + 's';
+        a.setAttribute('aria-label', 'Vidéo ' + (v.plat || '') + (v.views ? ' — ' + v.views + ' vues' : ''));
+
+        a.innerHTML =
+          (v.cover ? '<img src="' + v.cover + '" alt="" loading="lazy" decoding="async" />'
+                   : '<span class="tv-ghost">' + (ICONS[v.plat] || '') + '</span>') +
+          '<span class="tv-plat">' + (ICONS[v.plat] || '') + '</span>' +
+          '<span class="tv-play"></span>' +
+          '<span class="tv-meta">' +
+            (v.views ? '<span class="tv-views">' + EYE + v.views + '</span>' : '') +
+            (v.title ? '<span class="tv-title">' + v.title + '</span>' : '') +
+          '</span>';
+
+        a.addEventListener('click', function () {
+          if (window.va) window.va('event', { name: 'clic_video', data: { plat: v.plat, url: v.url } });
+        });
+
+        wrap.appendChild(a);
+      });
+
+      // masque la flèche "fais glisser" une fois qu'on a scrollé
+      var hint = document.querySelector('.tv-hint');
+      wrap.addEventListener('scroll', function () {
+        if (hint && wrap.scrollLeft > 20) { hint.style.opacity = '0'; hint.style.transition = 'opacity .3s'; }
+      }, { passive: true });
+    })();
 
     // track clicks per network (Vercel Analytics custom events)
     document.querySelectorAll('nav.links a.link').forEach(function (a) {
