@@ -718,6 +718,7 @@
     .tv-views svg { width: 13px; height: 13px; opacity: 0.9; }
     .tv-title {
       margin-top: 2px;
+      overflow-wrap: anywhere;
       font-size: 10.5px;
       font-weight: 600;
       line-height: 1.3;
@@ -964,8 +965,9 @@
        cover : 'covers/xxx.jpg' (optionnel — sinon vignette dégradée)
     */
     var TOP_VIDEOS = [
-      { plat: "tiktok", url: "https://www.tiktok.com/@okanpasoklm_biker/video/7569906668767563030", views: "1,6M", title: "VOUS AVEZ FUMER DU STUP MONSIEUR ?", cover: "covers/tiktok-7569906668767563030.jpg" },
-      { plat: "insta", url: "https://www.instagram.com/reel/DZ4x4oiMxfM/", alt: { tiktok: "https://www.tiktok.com/@okanpasoklm_biker/video/7654183146816081185" }, views: "2M", title: "POLICE VS BIKER", cover: "covers/insta-DZ4x4oiMxfM.jpg" }
+      { plat: "tiktok", url: "https://www.tiktok.com/@okanpasoklm_biker/video/7642263538773314849", alt: { insta: "https://www.instagram.com/reel/DYmDtLEMXKr/" }, views: "2,3M", title: "CACHÉ LA PLAQUE (contrôle de police)", cover: "covers/tiktok-7642263538773314849.jpg" },
+      { plat: "insta", url: "https://www.instagram.com/reel/DZ4x4oiMxfM/", alt: { tiktok: "https://www.tiktok.com/@okanpasoklm_biker/video/7654183146816081185" }, views: "2M", title: "POLICE VS BIKER", cover: "covers/insta-DZ4x4oiMxfM.jpg" },
+      { plat: "tiktok", url: "https://www.tiktok.com/@okanpasoklm_biker/video/7569906668767563030", views: "1,6M", title: "VOUS AVEZ FUMER DU STUP ?", cover: "covers/tiktok-7569906668767563030.jpg" }
     ];
 
     (function renderTopVideos() {
