@@ -527,6 +527,16 @@
     }
     .tv-scroll::-webkit-scrollbar { display: none; }
 
+    /* 1 ou 2 vidéos : vignettes plus grandes et centrées, sinon ça fait vide */
+    .tv-scroll.tv-few {
+      justify-content: center;
+      justify-content: safe center;
+    }
+    .tv-scroll.tv-few .tv-card { flex-basis: 168px; }
+    @media (max-width: 380px) {
+      .tv-scroll.tv-few .tv-card { flex-basis: 150px; }
+    }
+
     .tv-card {
       position: relative;
       flex: 0 0 134px;
@@ -720,6 +730,7 @@
     }
 
     .tv-hint {
+      display: none;
       margin: 6px 2px 0;
       font-size: 11px;
       font-weight: 600;
@@ -728,6 +739,7 @@
       align-items: center;
       gap: 5px;
     }
+    .tv-hint.is-on { display: flex; }
     .tv-hint span { animation: tvNudge 1.8s ease-in-out infinite; }
     @keyframes tvNudge {
       0%, 100% { transform: translateX(0); }
@@ -951,13 +963,16 @@
        title : petite légende (optionnel)
        cover : 'covers/xxx.jpg' (optionnel — sinon vignette dégradée)
     */
-    var TOP_VIDEOS = [];
+    var TOP_VIDEOS = [
+      { plat: "tiktok", url: "https://www.tiktok.com/@okanpasoklm_biker/video/7569906668767563030", views: "1,6M", title: "VOUS AVEZ FUMER DU STUP MONSIEUR ?", cover: "covers/tiktok-7569906668767563030.jpg" }
+    ];
 
     (function renderTopVideos() {
       var wrap = document.getElementById('tvScroll');
       var section = document.querySelector('.top-videos');
       if (!wrap) return;
       if (!TOP_VIDEOS.length) { if (section) section.style.display = 'none'; return; }
+      if (TOP_VIDEOS.length <= 2) wrap.classList.add('tv-few');
 
       var ICONS = {
         tiktok: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 8.6a6.6 6.6 0 0 1-4-1.3v7.1a5.6 5.6 0 1 1-5.6-5.6c.3 0 .6 0 .9.1v2.8a2.8 2.8 0 1 0 2 2.7V2h2.7a4 4 0 0 0 4 4v2.6Z"/></svg>',
@@ -1023,8 +1038,15 @@
         wrap.appendChild(card);
       });
 
-      // masque la flèche "fais glisser" une fois qu'on a scrollé
+      // "fais glisser" : affiché seulement si ça déborde vraiment, puis masqué au 1er scroll
       var hint = document.querySelector('.tv-hint');
+      function refreshHint() {
+        if (!hint) return;
+        hint.classList.toggle('is-on', wrap.scrollWidth > wrap.clientWidth + 4);
+      }
+      refreshHint();
+      window.addEventListener('resize', refreshHint);
+      if (window.ResizeObserver) new ResizeObserver(refreshHint).observe(wrap);
       wrap.addEventListener('scroll', function () {
         if (hint && wrap.scrollLeft > 20) { hint.style.opacity = '0'; hint.style.transition = 'opacity .3s'; }
       }, { passive: true });

@@ -35,6 +35,25 @@ def get(url, timeout=20):
     return urllib.request.urlopen(req, timeout=timeout).read()
 
 
+SHORT_HOSTS = ('vm.tiktok.com', 'vt.tiktok.com', 'youtu.be/', 'instagram.com/share')
+
+
+def resolve(url):
+    """Résout les liens courts (vm.tiktok.com/...) vers l'URL canonique."""
+    if not any(h in url for h in SHORT_HOSTS) or 'youtu.be/' in url:
+        return url
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': UA})
+        final = urllib.request.urlopen(req, timeout=25).geturl()
+        final = final.split('?')[0]
+        if final and final != url:
+            print('   ↪ %s' % final)
+        return final or url
+    except Exception as e:
+        print('⚠️  lien court non résolu (%s) : %s' % (url, e))
+        return url
+
+
 def clean_title(t):
     """Légende auto (caption TikTok) : on vire les hashtags et on raccourcit."""
     t = re.sub(r'#\S+', '', t or '')
@@ -116,7 +135,7 @@ def main():
         title = parts[2].strip() if len(parts) > 2 else ''
 
         # " + " = la MÊME vidéo sur plusieurs réseaux (la 1re est la principale)
-        urls = [u.strip() for u in re.split(r'\s+\+\s+', parts[0]) if u.strip()]
+        urls = [resolve(u.strip()) for u in re.split(r'\s+\+\s+', parts[0]) if u.strip()]
         main_url = urls[0]
         plat = platform_of(main_url)
         slug = slug_of(main_url, plat)

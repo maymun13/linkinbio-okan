@@ -5,8 +5,6 @@
 # MÊME vidéo publiée sur plusieurs réseaux ? Colle les liens sur LA MÊME ligne,
 # séparés par " + ". Le 1er lien est le principal (la vignette envoie là-dessus),
 # les autres deviennent des petites pastilles cliquables sur la vignette.
-#
-# Exemples :
-# https://www.tiktok.com/@okanpasoklm_biker/video/7300000000000000000 | 2,4M | Run de nuit sur le périph
-# https://www.tiktok.com/@okanpasoklm_biker/video/7311111111111111111 + https://www.instagram.com/reel/CxxxxxxxxxX/ | 3,5M | Wheeling à Bastille
-# https://www.youtube.com/watch?v=xxxxxxxxxxx | 412K | Ma nouvelle moto
+# Les liens courts (vm.tiktok.com) sont résolus automatiquement.
+
+https://vm.tiktok.com/ZN8FjnP5R/ | 1,6M | VOUS AVEZ FUMER DU STUP MONSIEUR ?
