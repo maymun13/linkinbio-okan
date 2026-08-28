@@ -577,6 +577,14 @@
     }
     .tv-ghost svg { width: 44px; height: 44px; }
 
+    /* lien principal : couvre toute la carte, sous les pastilles */
+    .tv-open {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      border-radius: inherit;
+    }
+
     .tv-plat {
       position: absolute;
       top: 8px; left: 8px;
@@ -593,6 +601,61 @@
       color: var(--accent, #fff);
     }
     .tv-plat svg { width: 14px; height: 14px; }
+
+    /* pastilles "aussi dispo sur" — cliquables, au-dessus du lien principal */
+    .tv-alts {
+      position: absolute;
+      top: 8px; right: 8px;
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .tv-alt {
+      position: relative;
+      width: 26px; height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.62);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      text-decoration: none;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    }
+    .tv-alt svg { width: 14px; height: 14px; }
+    .tv-alt:hover, .tv-alt:focus-visible {
+      transform: scale(1.16);
+      background: rgba(0,0,0,0.85);
+      border-color: currentColor;
+    }
+    .tv-alt.tk:hover { color: #25f4ee; }
+    .tv-alt.ig:hover { color: #e1306c; }
+    .tv-alt.yt:hover { color: #ff0000; }
+
+    /* petite étiquette au survol d'une pastille alternative */
+    .tv-alt::after {
+      content: attr(data-tip);
+      position: absolute;
+      right: 32px;
+      top: 50%;
+      white-space: nowrap;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 7px;
+      border-radius: 6px;
+      background: rgba(0,0,0,0.85);
+      color: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(4px, -50%);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    .tv-alt:hover::after { opacity: 1; transform: translate(0, -50%); }
+    @media (hover: none) { .tv-alt::after { display: none; } }
 
     .tv-play {
       position: absolute;
@@ -872,9 +935,11 @@
 
     /* ===== TOP VIDEOS =====
        Pour ajouter/modifier une vidéo : une ligne ici.
-       plat  : 'tiktok' | 'insta' | 'yt'
-       url   : lien de la vidéo
-       views : texte affiché (ex. '2,4M')
+       plat  : plateforme principale — 'tiktok' | 'insta' | 'yt'  (là où la vignette envoie)
+       url   : lien de la vidéo sur cette plateforme
+       alt   : MÊME vidéo sur d'autres réseaux -> { insta: "https://...", yt: "..." }
+               (affiché en pastilles cliquables en haut à droite de la vignette)
+       views : texte affiché (ex. '2,4M' — le cumul des deux plateformes si tu veux)
        title : petite légende (optionnel)
        cover : 'covers/xxx.jpg' (optionnel — sinon vignette dégradée)
     */
@@ -892,18 +957,22 @@
         yt: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.5 12 4.5 12 4.5s-7 0-8.9.6A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.6 8.9.6 8.9.6s7 0 8.9-.6a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8ZM9.8 15.5v-7l5.8 3.5-5.8 3.5Z"/></svg>'
       };
       var CLASS = { tiktok: 'tk', insta: 'ig', yt: 'yt' };
+      var NAME  = { tiktok: 'TikTok', insta: 'Instagram', yt: 'YouTube' };
       var EYE = '<svg viewBox="0 0 24 24" fill="none"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>';
 
-      TOP_VIDEOS.forEach(function (v, i) {
-        var a = document.createElement('a');
-        a.className = 'tv-card ' + (CLASS[v.plat] || '') + (v.cover ? '' : ' no-cover');
-        a.href = v.url;
-        a.target = '_blank';
-        a.rel = 'noopener';
-        a.style.animationDelay = (0.10 + i * 0.05).toFixed(2) + 's';
-        a.setAttribute('aria-label', 'Vidéo ' + (v.plat || '') + (v.views ? ' — ' + v.views + ' vues' : ''));
+      function track(plat, url) {
+        if (window.va) window.va('event', { name: 'clic_video', data: { plat: plat, url: url } });
+      }
 
-        a.innerHTML =
+      TOP_VIDEOS.forEach(function (v, i) {
+        var card = document.createElement('div');
+        card.className = 'tv-card ' + (CLASS[v.plat] || '') + (v.cover ? '' : ' no-cover');
+        card.style.animationDelay = (0.10 + i * 0.05).toFixed(2) + 's';
+
+        var alts = v.alt || {};
+        var altKeys = Object.keys(alts).filter(function (k) { return alts[k]; });
+
+        card.innerHTML =
           (v.cover ? '<img src="' + v.cover + '" alt="" loading="lazy" decoding="async" />'
                    : '<span class="tv-ghost">' + (ICONS[v.plat] || '') + '</span>') +
           '<span class="tv-plat">' + (ICONS[v.plat] || '') + '</span>' +
@@ -913,11 +982,37 @@
             (v.title ? '<span class="tv-title">' + v.title + '</span>' : '') +
           '</span>';
 
-        a.addEventListener('click', function () {
-          if (window.va) window.va('event', { name: 'clic_video', data: { plat: v.plat, url: v.url } });
-        });
+        // lien principal : toute la vignette
+        var main = document.createElement('a');
+        main.className = 'tv-open';
+        main.href = v.url;
+        main.target = '_blank';
+        main.rel = 'noopener';
+        main.setAttribute('aria-label',
+          'Voir la vidéo sur ' + (NAME[v.plat] || '') + (v.views ? ' — ' + v.views + ' vues' : ''));
+        main.addEventListener('click', function () { track(v.plat, v.url); });
+        card.appendChild(main);
 
-        wrap.appendChild(a);
+        // même vidéo sur d'autres réseaux -> pastilles cliquables
+        if (altKeys.length) {
+          var box = document.createElement('span');
+          box.className = 'tv-alts';
+          altKeys.forEach(function (k) {
+            var a = document.createElement('a');
+            a.className = 'tv-alt ' + (CLASS[k] || '');
+            a.href = alts[k];
+            a.target = '_blank';
+            a.rel = 'noopener';
+            a.dataset.tip = 'Voir sur ' + (NAME[k] || k);
+            a.setAttribute('aria-label', 'Voir la même vidéo sur ' + (NAME[k] || k));
+            a.innerHTML = ICONS[k] || '';
+            a.addEventListener('click', function (e) { e.stopPropagation(); track(k, alts[k]); });
+            box.appendChild(a);
+          });
+          card.appendChild(box);
+        }
+
+        wrap.appendChild(card);
       });
 
       // masque la flèche "fais glisser" une fois qu'on a scrollé

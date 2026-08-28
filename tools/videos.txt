@@ -1,7 +1,12 @@
 # Mes vidéos qui ont cartonné — une par ligne, dans l'ordre d'affichage.
-# Format :  URL | vues affichées | petite légende (les 2 dernières sont optionnelles)
+#
+# Format :  URL | vues affichées | petite légende      (vues et légende optionnelles)
+#
+# MÊME vidéo publiée sur plusieurs réseaux ? Colle les liens sur LA MÊME ligne,
+# séparés par " + ". Le 1er lien est le principal (la vignette envoie là-dessus),
+# les autres deviennent des petites pastilles cliquables sur la vignette.
 #
 # Exemples :
 # https://www.tiktok.com/@okanpasoklm_biker/video/7300000000000000000 | 2,4M | Run de nuit sur le périph
-# https://www.instagram.com/reel/CxxxxxxxxxX/ | 1,1M | Wheeling à Bastille
+# https://www.tiktok.com/@okanpasoklm_biker/video/7311111111111111111 + https://www.instagram.com/reel/CxxxxxxxxxX/ | 3,5M | Wheeling à Bastille
 # https://www.youtube.com/watch?v=xxxxxxxxxxx | 412K | Ma nouvelle moto
