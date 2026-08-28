@@ -655,7 +655,15 @@
       transition: opacity 0.18s ease, transform 0.18s ease;
     }
     .tv-alt:hover::after { opacity: 1; transform: translate(0, -50%); }
-    @media (hover: none) { .tv-alt::after { display: none; } }
+    /* tactile : pas d'infobulle, et cibles de tap plus grandes (doigt) */
+    @media (hover: none) {
+      .tv-alt::after { display: none; }
+      .tv-alts { gap: 8px; top: 7px; right: 7px; }
+      .tv-alt { width: 34px; height: 34px; }
+      .tv-alt svg { width: 17px; height: 17px; }
+      .tv-plat { width: 30px; height: 30px; top: 7px; left: 7px; }
+      .tv-plat svg { width: 15px; height: 15px; }
+    }
 
     .tv-play {
       position: absolute;
