@@ -38,20 +38,27 @@ def get(url, timeout=20):
 SHORT_HOSTS = ('vm.tiktok.com', 'vt.tiktok.com', 'youtu.be/', 'instagram.com/share')
 
 
+def strip_tracking(url):
+    """Vire les paramètres de suivi (?igsi=, ?is_from_webapp=...).
+    On garde la query pour YouTube (?v= est l'identifiant)."""
+    if 'youtube.com' in url or 'youtu.be' in url:
+        return url
+    return url.split('?')[0]
+
+
 def resolve(url):
     """Résout les liens courts (vm.tiktok.com/...) vers l'URL canonique."""
     if not any(h in url for h in SHORT_HOSTS) or 'youtu.be/' in url:
-        return url
+        return strip_tracking(url)
     try:
         req = urllib.request.Request(url, headers={'User-Agent': UA})
-        final = urllib.request.urlopen(req, timeout=25).geturl()
-        final = final.split('?')[0]
+        final = strip_tracking(urllib.request.urlopen(req, timeout=25).geturl())
         if final and final != url:
             print('   ↪ %s' % final)
         return final or url
     except Exception as e:
         print('⚠️  lien court non résolu (%s) : %s' % (url, e))
-        return url
+        return strip_tracking(url)
 
 
 def clean_title(t):
