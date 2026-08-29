@@ -6,6 +6,14 @@ const DESTINATIONS = {
   x: PAGE_LIENS,
 };
 
+// Plusieurs URLs peuvent pointer sur le même réseau : on les ramène à un seul
+// nom pour que les stats ne soient pas éclatées en trois lignes.
+const ALIASES = {
+  x: 'x',
+  tw: 'x',
+  twitter: 'x',
+};
+
 const BOT_UA = /bot|crawler|spider|preview|facebookexternalhit|whatsapp|telegrambot|discordbot|slackbot|twitterbot|embedly|quora link preview|vercel|headless/i;
 
 function header(req, name) {
@@ -49,7 +57,7 @@ async function logClick(req, slug, src) {
 
 module.exports = async (req, res) => {
   const url = new URL(req.url, 'https://okanpasoklm.com');
-  const slug = (url.searchParams.get('slug') || '').toLowerCase();
+  const slug = ALIASES[(url.searchParams.get('slug') || '').toLowerCase()];
   const dest = DESTINATIONS[slug];
 
   if (!dest) {

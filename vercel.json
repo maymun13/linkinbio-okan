@@ -5,7 +5,7 @@
     { "source": "/", "destination": "/liens", "permanent": false }
   ],
   "rewrites": [
-    { "source": "/x", "destination": "/api/go?slug=x" },
+    { "source": "/:slug(x|X|tw|TW|twitter|Twitter|TWITTER)", "destination": "/api/go?slug=:slug" },
     { "source": "/stats", "destination": "/api/stats" }
   ]
 }
