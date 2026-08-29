@@ -749,18 +749,43 @@
       z-index: 2;
       padding: 9px 10px 10px;
     }
+    /* compteur de vues : pastille orange qui vibre par à-coups */
     .tv-views {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      font-size: 13px;
+      padding: 3px 9px 3px 7px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--fire), var(--fire-2));
+      color: #fff;
+      font-size: 12.5px;
       font-weight: 900;
       letter-spacing: -0.01em;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.45);
+      box-shadow: 0 3px 12px rgba(255,94,26,0.5), inset 0 0 0 1px rgba(255,255,255,0.18);
+      animation: viewsBuzz 4.2s ease-in-out infinite,
+                 viewsGlow 2.4s ease-in-out infinite;
+      will-change: transform;
     }
-    .tv-views svg { width: 13px; height: 13px; opacity: 0.9; }
+    .tv-views svg { width: 12px; height: 12px; opacity: 0.95; }
+
+    /* immobile la plupart du temps, puis une courte vibration */
+    @keyframes viewsBuzz {
+      0%, 60%, 100% { transform: translateX(0) rotate(0deg); }
+      62% { transform: translateX(-2px) rotate(-2.5deg); }
+      64% { transform: translateX(2px)  rotate(2.5deg); }
+      66% { transform: translateX(-2px) rotate(-2.5deg); }
+      68% { transform: translateX(2px)  rotate(2.5deg); }
+      70% { transform: translateX(-1.5px) rotate(-1.5deg); }
+      72% { transform: translateX(1.5px)  rotate(1.5deg); }
+      74% { transform: translateX(0) rotate(0deg); }
+    }
+    @keyframes viewsGlow {
+      0%, 100% { box-shadow: 0 3px 12px rgba(255,94,26,0.45), inset 0 0 0 1px rgba(255,255,255,0.18); }
+      50%      { box-shadow: 0 3px 22px rgba(255,94,26,0.95), inset 0 0 0 1px rgba(255,255,255,0.3); }
+    }
     .tv-title {
-      margin-top: 2px;
+      margin-top: 4px;
       overflow-wrap: anywhere;
       font-size: 10.5px;
       font-weight: 600;
@@ -797,6 +822,7 @@
     @media (prefers-reduced-motion: reduce) {
       .tv-hint span { animation: none; }
       .tv-scroll { scroll-behavior: auto; }
+      .tv-views { animation: none; }
     }
 
     .footer {
@@ -1090,6 +1116,10 @@
           });
           card.appendChild(box);
         }
+
+        // vibrations décalées : les vignettes ne tremblent pas en choeur
+        var badge = card.querySelector('.tv-views');
+        if (badge) badge.style.animationDelay = (i * 0.7).toFixed(2) + 's, ' + (i * 0.35).toFixed(2) + 's';
 
         wrap.appendChild(card);
       });
